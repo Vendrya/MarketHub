@@ -3,9 +3,13 @@
 
 Stack:
 
-* **Frontend:** React, TypeScript, TailwindCSS
-* **Backend:** Java, Spring Boot
-* **Database:** PostgreSQL
+- **Frontend:** React, TypeScript, TailwindCSS
+- **Backend:** Java, Spring Boot
+- **Database:** PostgreSQL
+
+- **User Resources**: CloudFlare
+- **Backend host**: DigitalOcean
+- **Frontend host**: Vercel
 
 ---
 
