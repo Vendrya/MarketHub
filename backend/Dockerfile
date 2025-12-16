@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk-alpine
 
-WORKDIR /app
+WORKDIR /src
 
 COPY target/app.jar app.jar
 
