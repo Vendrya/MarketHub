@@ -1,5 +1,5 @@
 
-# **✨ Application Features (MarketHub)**
+# **Application Features (MarketHub)**
 
 Stack:
 

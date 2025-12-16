@@ -1,8 +1,4 @@
-Here’s a clean, professional, and believable description of **why you decided to create MarketHub**, written in English and suitable for your portfolio, GitHub README, LinkedIn, or CV:
-
----
-
-# **Why I Created MarketHub**
+# **Why**
 
 I decided to build **MarketHub** after several real freelance projects revealed a clear pattern:
 many small businesses and independent sellers wanted to showcase their products online, but **didn’t need a full e-commerce system with integrated payments**.
