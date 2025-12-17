@@ -96,15 +96,15 @@ websocket/
 - Auth & Users
 - Products
 - Search & Tags
-- Chat
+- Chat (baja prioridad)
 - Notifications
-- Reports
+- Reports (baja prioridad)
 - Admin
-- Analytics
+- Analytics (baja prioridad)
 
 ---
 
-## 4️⃣ Autenticación & Seguridad
+## 4️⃣ Autenticación & Seguridad (confirmo)
 
 ### Auth
 
@@ -114,17 +114,17 @@ websocket/
     - USER
     - ADMIN
 
-### Seguridad
+### Seguridad (confirmo)
 
 - Spring Security
-- Rate limiting (Cloudflare)
+- Rate limiting (Cloudflare) (baja priodad)
 - Input validation
 - Soft delete para datos críticos
 - Auditoría básica (created_at, updated_at)
 
 ---
 
-## 5️⃣ Modelo de Datos (PostgreSQL)
+## 5️⃣ Modelo de Datos (PostgreSQL) (confirmo)
 
 ### Usuarios
 
@@ -143,7 +143,7 @@ users (
 
 ```
 
-### Productos
+### Productos (confirmo)
 
 ```sql
 products (
@@ -171,7 +171,7 @@ product_images (
 
 ```
 
-### Tags
+### Tags (baja prioridad)
 
 ```sql
 tags (
@@ -186,7 +186,7 @@ product_tags (
 
 ```
 
-### Favoritos
+### Favoritos (baja prioridad)
 
 ```sql
 favorites (
@@ -197,7 +197,7 @@ favorites (
 
 ```
 
-### Chats
+### Chats (baja prioridad)
 
 ```sql
 conversations (
