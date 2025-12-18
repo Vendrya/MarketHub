@@ -1,5 +1,6 @@
 import { ShoppingCart, Search, Menu, User } from 'lucide-react';
 import { Module } from './ui/navigation-button';
+import { Button } from './ui/button';
 
 export function Header() {
     return (
@@ -7,28 +8,22 @@ export function Header() {
             <div className="w-full flex items-center justify-center">
                 <div className="h-16 px-4 text-zinc-900 flex items-center max-w-6xl w-full">
 
-                    <div className="flex flex-row items-center gap-10">
+                    <div className="flex flex-row items-center gap-5">
                         <a href="/" className="flex items-center">
-                            <h1 className="text-2xl font-bold text-black">MarketHub</h1>
+                            <h1 className="text-2xl font-bold font-inter text-black">MarketHub</h1>
                         </a>
-                        <div className="flex items-center">
-                            <nav className="hidden lg:flex gap-6 ml-6">
-                                <Module asChild={true}>
-                                    <div className="">
-                                        <a href="/explore">Explore</a>
-                                    </div>
+                        <div >
+                            <nav className="hidden lg:flex gap-2 ml-6">
+                                <Module>
+                                    <a href="/explore">Explore</a>
                                 </Module>
 
-                                <Module asChild={true}>
-                                    <div className="">
-                                        <a href="/sell">Sell</a>
-                                    </div>
+                                <Module>
+                                    <a href="/sell">Sell</a>
                                 </Module>
 
-                                <Module asChild={true}>
-                                    <div className="">
-                                        <a href="/about">About</a>
-                                    </div>
+                                <Module>
+                                    <a href="/about">About</a>
                                 </Module>
                             </nav>
                         </div>
@@ -38,15 +33,8 @@ export function Header() {
                         <button className="hover:text-gray-600 transition-colors">
                             <Search className="h-5 w-5" />
                         </button>
-                        <button className="hover:text-gray-600 transition-colors">
-                            <User className="h-5 w-5" />
-                        </button>
-                        <button className="relative hover:text-gray-600 transition-colors">
-                            <ShoppingCart className="h-5 w-5" />
-                            <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-black text-white text-xs flex items-center justify-center">
-                                3
-                            </span>
-                        </button>
+                        <Button variant={"primary"}>Log In</Button>
+                        <Button variant={"secondary"}>Sign Up</Button>
                     </div>
 
                 </div>

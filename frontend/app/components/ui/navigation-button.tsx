@@ -1,21 +1,21 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cn } from "./utils";
 
 function Module({
     className,
-    asChild = false,
+    children,
     ...props
-}: React.ComponentProps<"button"> & {
-    asChild?: boolean;
-}) {
-    const Comp = asChild ? Slot : "button";
-
+}: React.ComponentProps<"a">) {
     return (
-        <Comp
-            className={cn({ className }, "text-sm hover:text-gray-600 transition-colors px-2 bg-red-600")}
+        <a
+            className={cn(
+                "px-3 py-1 hover:bg-zinc-100 rounded-full hover:text-zinc-800 text-zinc-600 font-inter duration-300 inline-block",
+                className
+            )}
             {...props}
-        />
+        >
+            {children}
+        </a>
     );
 }
 
