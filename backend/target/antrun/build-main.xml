@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="maven-antrun-" default="main">
-  <target name="main">
-    <copy file="/home/nebula/Documentos/git/MarketHub/backend/target/backend-1.0-SNAPSHOT.jar" todir="/home/nebula/Documentos/git/MarketHub/backend/out" />
-    <move file="/home/nebula/Documentos/git/MarketHub/backend/out/backend-1.0-SNAPSHOT.jar" tofile="/home/nebula/Documentos/git/MarketHub/backend/out/app.jar" />
-  </target>
-</project>
