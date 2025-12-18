@@ -1,5 +1,3 @@
-"use client";
-
 import { ShoppingCart, Search, Menu, User } from 'lucide-react';
 
 export function Header() {
@@ -11,14 +9,10 @@ export function Header() {
                         <Menu className="h-6 w-6" />
                     </button>
                     <a href="/" className="flex items-center gap-2">
-                        <h1 className="text-2xl font-bold">LUXE</h1>
+                        <h1 className="text-2xl font-bol text-black">MarketHub</h1>
                     </a>
                     <nav className="hidden lg:flex gap-6">
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">New Arrivals</a>
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Men</a>
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Women</a>
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Accessories</a>
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Sale</a>
+                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Products</a>
                     </nav>
                 </div>
 
