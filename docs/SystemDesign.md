@@ -1,4 +1,4 @@
-## 1️⃣ Arquitectura general (High Level)
+## Arquitectura general (High Level)
 
 **Arquitectura: monolito modular + servicios externos**
 
@@ -6,7 +6,7 @@
 [ Client (Browser) ]
         |
         v
-[ Frontend (React + TS) ]  -- Vercel
+[ Frontend (NextJS + TS) ]  -- Vercel
         |
         v
 [ API Gateway / Backend ]
@@ -29,7 +29,7 @@
 
 ---
 
-## 2️⃣ Frontend Design (React)
+## Frontend Design (NextJS)
 
 ### Responsabilidades
 
@@ -74,7 +74,7 @@ src/
 
 ---
 
-## 3️⃣ Backend Design (Spring Boot)
+## Backend Design (Spring Boot)
 
 ### Arquitectura interna
 
@@ -96,15 +96,15 @@ websocket/
 - Auth & Users
 - Products
 - Search & Tags
-- Chat (baja prioridad)
+- Chat
 - Notifications
-- Reports (baja prioridad)
+- Reports
 - Admin
-- Analytics (baja prioridad)
+- Analytics
 
 ---
 
-## 4️⃣ Autenticación & Seguridad (confirmo)
+## Autenticación & Seguridad
 
 ### Auth
 
@@ -114,143 +114,17 @@ websocket/
     - USER
     - ADMIN
 
-### Seguridad (confirmo)
+### Seguridad
 
 - Spring Security
-- Rate limiting (Cloudflare) (baja priodad)
+- Rate limiting (Cloudflare)
 - Input validation
 - Soft delete para datos críticos
 - Auditoría básica (created_at, updated_at)
 
 ---
 
-## 5️⃣ Modelo de Datos (PostgreSQL) (confirmo)
-
-### Usuarios
-
-```sql
-users (
-  id UUID PK,
-  email,
-  password_hash,
-  username,
-  role,
-  profile_picture,
-  location_lat,
-  location_lng,
-  created_at
-)
-
-```
-
-### Productos (confirmo)
-
-```sql
-products (
-  id UUID PK,
-  seller_id FK,
-  title,
-  description,
-  price,
-  status ENUM(active, paused, sold),
-  category_id,
-  created_at,
-  updated_at
-)
-
-```
-
-### Imágenes
-
-```sql
-product_images (
-  id,
-  product_id,
-  image_url
-)
-
-```
-
-### Tags (baja prioridad)
-
-```sql
-tags (
-  id,
-  name
-)
-
-product_tags (
-  product_id,
-  tag_id
-)
-
-```
-
-### Favoritos (baja prioridad)
-
-```sql
-favorites (
-  user_id,
-  product_id,
-  created_at
-)
-
-```
-
-### Chats (baja prioridad)
-
-```sql
-conversations (
-  id,
-  product_id,
-  buyer_id,
-  seller_id,
-  created_at
-)
-
-messages (
-  id,
-  conversation_id,
-  sender_id,
-  content,
-  created_at,
-  read
-)
-
-```
-
-### Reportes
-
-```sql
-reports (
-  id,
-  reporter_id,
-  target_type ENUM(user, product),
-  target_id,
-  reason,
-  status,
-  created_at
-)
-
-```
-
-### Reviews
-
-```sql
-reviews (
-  id,
-  reviewer_id,
-  target_type ENUM(user, product),
-  rating,
-  comment,
-  created_at
-)
-
-```
-
----
-
-## 6️⃣ Search & Filtering
+## Search & Filtering
 
 ### Implementación inicial
 
@@ -270,7 +144,7 @@ reviews (
 
 ---
 
-## 7️⃣ Real-Time (Chat & Notifications)
+## Real-Time (Chat & Notifications) (Low Priority)
 
 ### Tecnología
 
@@ -302,7 +176,7 @@ Backend:
 
 ---
 
-## 8️⃣ Image Upload (MinIO / S3)
+## Image Upload (MinIO / S3)
 
 ### Flujo
 
@@ -319,7 +193,7 @@ Backend:
 
 ---
 
-## 9️⃣ Analytics de Productos
+## Analytics de Productos (Low Priority)
 
 ### Eventos trackeados
 
@@ -348,7 +222,7 @@ product_events (
 
 ---
 
-## 🔟 Admin Dashboard
+## Admin Dashboard (Mid Priority)
 
 ### Funciones
 
@@ -365,25 +239,7 @@ product_events (
 
 ---
 
-## 1️⃣1️⃣ Geolocalización
-
-### Implementación
-
-- Guardar lat/lng del seller
-- Query por distancia (Haversine)
-- Filtro por radio
-
-```sql
-WHERE earth_distance(
-  ll_to_earth(lat, lng),
-  ll_to_earth(:userLat, :userLng)
-) < :radius
-
-```
-
----
-
-## 1️⃣2️⃣ Escalabilidad
+## Escalabilidad (Low Priority)
 
 ### Horizontal
 
@@ -401,17 +257,3 @@ WHERE earth_distance(
 - Separar Chat Service
 - Separar Search Service
 - Event-driven (Kafka / RabbitMQ)
-
----
-
-## 1️⃣3️⃣ Por qué este design es bueno para entrevistas
-
-✔ Realista
-
-✔ Escalable
-
-✔ No overengineered
-
-✔ Usa buenas prácticas
-
-✔ Muestra criterio técnico
