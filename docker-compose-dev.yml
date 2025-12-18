@@ -60,8 +60,8 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
 
 volumes:
   pgdata:

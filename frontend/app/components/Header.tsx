@@ -1,8 +1,9 @@
 import { ShoppingCart, Search, Menu, User } from 'lucide-react';
+import { Module } from './ui/navigation-button';
 
 export function Header() {
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur">
+        <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur h-16 border-b border-gray-200">
             <div className="w-full flex items-center justify-center">
                 <div className="h-16 px-4 text-zinc-900 flex items-center max-w-6xl w-full">
 
@@ -12,11 +13,23 @@ export function Header() {
                         </a>
                         <div className="flex items-center">
                             <nav className="hidden lg:flex gap-6 ml-6">
-                                <a href="#" className="text-sm hover:text-gray-600 transition-colors">Explore</a>
+                                <Module asChild={true}>
+                                    <div className="">
+                                        <a href="/explore">Explore</a>
+                                    </div>
+                                </Module>
 
-                                <a href="#" className="text-sm hover:text-gray-600 transition-colors">Sell Products</a>
+                                <Module asChild={true}>
+                                    <div className="">
+                                        <a href="/sell">Sell</a>
+                                    </div>
+                                </Module>
 
-                                <a href="#" className="text-sm hover:text-gray-600 transition-colors">About</a>
+                                <Module asChild={true}>
+                                    <div className="">
+                                        <a href="/about">About</a>
+                                    </div>
+                                </Module>
                             </nav>
                         </div>
                     </div>
