@@ -1,15 +1,14 @@
-
-# **Application Features (MarketHub)**
+# **Application Features**
 
 Stack:
 
-- **Frontend:** React, TypeScript, TailwindCSS
+- **Frontend:** NextJS, TypeScript, TailwindCSS
 - **Backend:** Java, Spring Boot
-- **Database:** PostgreSQL
+- **Database:** ORM / PostgreSQL
 
-- **User Resources**: CloudFlare
-- **Backend host**: DigitalOcean
-- **Frontend host**: Vercel
+- User Resources: MinIO
+- Backend host: DigitalOcean
+- Frontend host: Vercel
 
 ---
 
@@ -19,21 +18,21 @@ Unregistered users can:
 
 ### Browse all products
 
-* Product list
-* Product detail page
-* View images, description, price, tags, and seller info
+- Product list
+- Product detail page
+- View images, description, price, tags, and seller info
 
 ### Search and filter
 
-* Search by text
-* Filter by tags, category, price, or creation date
+- Search by text
+- Filter by tags, category, price, or creation date
 
 ### View public seller profile
 
-* Seller name
-* Profile picture
-* Published products
-* Join date
+- Seller name
+- Profile picture
+- Published products
+- Join date
 
 ---
 
@@ -45,57 +44,55 @@ Registered users get access to private functionality:
 
 Shows key metrics such as:
 
-* Number of active products
-* Total favorites
-* Latest messages
-* Product views
-* Recent interactions
+- Number of active products
+- Total favorites
+- Latest messages
+- Product views
+- Recent interactions
 
 ### Manage their own store
 
-* Publish new products
-* Upload product images (S3/MinIO)
-* Add tags, categories, and pricing
-* Edit or delete products
-* Set product status: **active / paused / sold**
+- Publish new products
+- Upload product images (S3/MinIO)
+- Add tags, categories, and pricing
+- Edit or delete products
+- Set product status: **active / paused / sold**
 
-### Real-time chat
+### Real-time chat (Low Priority)
 
-* Chat with buyers or sellers
-* One conversation per product (organized chat)
-* Notifications for new messages
-* List of active conversations in the dashboard
+- Chat with buyers or sellers
+- One conversation per product (organized chat)
+- Notifications for new messages
+- List of active conversations in the dashboard
 
 ### Contact other sellers
 
-* “Contact Seller” button on product pages
-* Opens a private chat room
-* Used to arrange payment, shipping, and details
+- “Contact Seller” button on product pages
+- Opens a private chat room
+- Used to arrange payment, shipping, and details
 
 ### Product favorites (Wishlist)
 
-* Add products to favorites
-* See favorite items in dashboard
-* Seller sees favorite count (analytics)
+- Add products to favorites
+- See favorite items in dashboard
+- Seller sees favorite count (analytics)
 
 ### Notifications
 
-* New message
-* New contact from a buyer
-* Product favorited
-* Admin actions (if applicable)
-
+- New message
+- New contact from a buyer
+- Product favorited
+- Admin actions (if applicable)
 
 ## Advanced Search & Tag System
 
-* Dynamic tags stored in PostgreSQL
-* Filter products by:
-
-  * Price
-  * Category
-  * Tags
-  * Seller
-  * Recently updated
+- Dynamic tags stored in PostgreSQL
+- Filter products by:
+    - Price
+    - Category
+    - Tags
+    - Seller
+    - Recently updated
 
 ---
 
@@ -103,10 +100,9 @@ Shows key metrics such as:
 
 Let users report suspicious content or behavior:
 
-* Report a product (fraud, spam, fake listing)
-* Report a user
-* Reports go to admin dashboard
-
+- Report a product (fraud, spam, fake listing)
+- Report a user
+- Reports go to admin dashboard
 
 ---
 
@@ -114,22 +110,22 @@ Let users report suspicious content or behavior:
 
 Even a simple admin panel makes your project feel complete:
 
-* List all users
-* Manage products
-* Review reports
-* Ban users
-* Disable or delete suspicious products
+- List all users
+- Manage products
+- Review reports
+- Ban users
+- Disable or delete suspicious products
 
 ---
 
-## Product Analytics
+## Product Analytics (Low Priority)
 
 Displayed in the seller dashboard:
 
-* Number of views
-* Number of favorites
-* Number of conversations started
-* Status changes (sold, paused, active)
+- Number of views
+- Number of favorites
+- Number of conversations started
+- Status changes (sold, paused, active)
 
 ---
 
@@ -137,22 +133,22 @@ Displayed in the seller dashboard:
 
 Every product should have:
 
-* **Active**
-* **Paused**
-* **Sold**
+- **Active**
+- **Paused**
+- **Sold**
 
 The seller can update the status at any time.
 
 ---
 
-## Real-time Notifications
+## Real-time Notifications (Low Priority)
 
 Using WebSockets or SSE:
 
-* New chat message
-* New favorite
-* Buyer contacted the seller
-* Admin response to reports
+- New chat message
+- New favorite
+- Buyer contacted the seller
+- Admin response to reports
 
 ---
 
@@ -160,26 +156,19 @@ Using WebSockets or SSE:
 
 Professional workflow:
 
-* Upload images to **MinIO** (local)
-* Use S3-compatible API for production
-* Store only URLs in PostgreSQL
+- Upload images to **MinIO** (local)
+- Use S3-compatible API for production
+- Store only URLs in PostgreSQL
 
 ---
 
-### Geolocation
-
-* Sellers can add their location
-* Buyers filter by distance
-* Map view using Leaflet or Google Maps
-
 ### Reviews & Ratings
 
-* Rate sellers
-* Rate products
-* Public review system
+- Rate sellers
+- Rate products
+- Public review system
 
 ### SEO-Friendly Public Pages
 
-* Product pages accessible without login
-* Optimized for sharing links and search indexing
-
+- Product pages accessible without login
+- Optimized for sharing links and search indexing
