@@ -20,8 +20,8 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     ports:
-      - "9000:9000"   # API S3
-      - "9001:9001"   # Web Console
+      - "9000:9000" # API S3
+      - "9001:9001" # Web Console
     volumes:
       - minio-data:/data
     restart: unless-stopped
@@ -46,12 +46,19 @@ services:
       MINIO_BUCKET: product-images
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     container_name: frontend
     ports:
       - "5173:5173"
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 volumes:
   pgdata:
