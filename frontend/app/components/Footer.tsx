@@ -6,7 +6,7 @@ export function Footer() {
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                     <div>
-                        <h3 className="font-bold text-xl mb-4">LUXE</h3>
+                        <h3 className="font-bold text-xl mb-4">MarketHub</h3>
                         <p className="text-gray-600 text-sm mb-4">
                             Your destination for premium fashion and lifestyle products.
                         </p>
@@ -58,7 +58,7 @@ export function Footer() {
                 </div>
 
                 <div className="pt-8 border-t text-center text-sm text-gray-600">
-                    <p>&copy; 2024 LUXE. All rights reserved.</p>
+                    <p>&copy; 2025 MarketHub. All rights reserved.</p>
                 </div>
             </div>
         </footer>

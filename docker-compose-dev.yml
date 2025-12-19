@@ -61,6 +61,7 @@ services:
       - backend
     volumes:
       - ./frontend:/app/frontend
+      - /app/frontend/node_modules
 
 volumes:
   pgdata:

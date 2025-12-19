@@ -1,36 +1,74 @@
-import { ShoppingCart, Search, Menu, User } from 'lucide-react';
+"use client";
+import { Search } from 'lucide-react';
+import { Module } from './ui/navigation-button';
+import { Button } from './ui/button';
+import { useState } from 'react';
 
 export function Header() {
-    return (
-        <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                <div className="flex items-center gap-8">
-                    <button className="lg:hidden">
-                        <Menu className="h-6 w-6" />
-                    </button>
-                    <a href="/" className="flex items-center gap-2">
-                        <h1 className="text-2xl font-bol text-black">MarketHub</h1>
-                    </a>
-                    <nav className="hidden lg:flex gap-6">
-                        <a href="#" className="text-sm hover:text-gray-600 transition-colors">Products</a>
-                    </nav>
-                </div>
+    const [searchQuery, setSearchQuery] = useState('');
 
-                <div className="flex items-center gap-4">
-                    <button className="hover:text-gray-600 transition-colors">
-                        <Search className="h-5 w-5" />
-                    </button>
-                    <button className="hover:text-gray-600 transition-colors">
-                        <User className="h-5 w-5" />
-                    </button>
-                    <button className="relative hover:text-gray-600 transition-colors">
-                        <ShoppingCart className="h-5 w-5" />
-                        <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-black text-white text-xs flex items-center justify-center">
-                            3
-                        </span>
-                    </button>
+    // TODO: Implement search functionality by querying the backend API for tagged products
+    const handleSearch = async () => {
+        if (!searchQuery.trim()) return;
+        try {
+            const res = await fetch(`/get-tagged-products?query=${encodeURIComponent(searchQuery)}`);
+            if (!res.ok) throw new Error('Error fetching products');
+            const data = await res.json();
+            console.log('Tagged products:', data);
+
+        } catch (error) {
+            console.error('Search error:', error);
+        }
+    };
+
+    return (
+        <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur h-16 border-b border-gray-200 px-10">
+            <div className="w-full flex items-center justify-center">
+                <div className="h-16 text-zinc-900 flex flex-row items-center justify-baseline w-full max-w-7xl">
+
+                    <div className="flex flex-row items-center gap-5">
+                        <a href="/" className="flex items-center">
+                            <h1 className="text-2xl font-bold font-inter text-black">MarketHub</h1>
+                        </a>
+                        <div >
+                            <nav className="sm:flex gap-2 ml-6">
+                                <Module href="/explore">
+                                    Explore
+                                </Module>
+
+                                <Module href="/sell">
+                                    Sell
+                                </Module>
+
+                                <Module href="/about">
+                                    About
+                                </Module>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div className='flex-1 justify-center hidden lg:flex'>
+                        <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-2xl flex items-center justify-center gap-2">
+                            <button onClick={handleSearch}>
+                                <Search className="h-5 w-5" />
+                            </button>
+                            <input
+                                className="outline-none bg-transparent"
+                                placeholder="Search products..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex-1 sm:flex justify-end gap-5 hidden">
+                        <Button variant={"primary"}>Log In</Button>
+                        <Button variant={"secondary"}>Sign Up</Button>
+                    </div>
+
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
