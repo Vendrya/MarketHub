@@ -49,7 +49,7 @@ export function Header() {
                     </div>
 
                     <div className='flex-1 justify-center hidden lg:flex'>
-                        <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-2xl flex items-center justify-center gap-2">
+                        <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-lg flex items-center justify-center gap-2">
                             <button onClick={handleSearch}>
                                 <Search className="h-5 w-5" />
                             </button>
