@@ -64,8 +64,12 @@ export function Header() {
                     </div>
 
                     <div className="flex-1 sm:flex justify-end gap-5 hidden">
-                        <Button variant={"primary"}>Log In</Button>
-                        <Button variant={"secondary"}>Sign Up</Button>
+                        <Button variant={"primary"} onClick={() => {
+                            window.location.href = "/login"
+                        }}>Log In</Button>
+                        <Button variant={"secondary"} onClick={() => {
+                            window.location.href = "/register"
+                        }}>Sign Up</Button>
                     </div>
 
                 </div>

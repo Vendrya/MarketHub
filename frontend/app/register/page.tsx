@@ -12,8 +12,8 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className="flex min-h-screen items-center justify-center font-sans bg-[--background] text-[--foreground]">
-            <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
+        <div className="flex items-center justify-center font-sans bg-[--background] text-[--foreground]">
+            <main className="flex w-full max-w-3xl flex-col items-center justify-center py-32">
                 <form action="" className="flex flex-col w-full max-w-lg border border-gray-300 rounded-2xl p-10 items-center justify-center" onSubmit={async (e) => {
                     e.preventDefault();
                     setLoading(true);
