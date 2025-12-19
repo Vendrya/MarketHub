@@ -8,6 +8,7 @@ export function Header() {
     const [searchQuery, setSearchQuery] = useState('');
 
     // TODO: Implement search functionality by querying the backend API for tagged products
+    // TODO: Create context to manage Login state across the app
     const handleSearch = async () => {
         if (!searchQuery.trim()) return;
         try {
@@ -22,7 +23,7 @@ export function Header() {
     };
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur h-16 border-b border-gray-200 px-10">
+        <header className="sticky top-0 z-50 w-full bg-[--background]/55 backdrop-blur h-16 border-b border-gray-200 px-10">
             <div className="w-full flex items-center justify-center">
                 <div className="h-16 text-zinc-900 flex flex-row items-center justify-baseline w-full max-w-7xl">
 
@@ -48,7 +49,7 @@ export function Header() {
                     </div>
 
                     <div className='flex-1 justify-center hidden lg:flex'>
-                        <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-2xl flex items-center justify-center gap-2">
+                        <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-lg flex items-center justify-center gap-2">
                             <button onClick={handleSearch}>
                                 <Search className="h-5 w-5" />
                             </button>
@@ -63,8 +64,12 @@ export function Header() {
                     </div>
 
                     <div className="flex-1 sm:flex justify-end gap-5 hidden">
-                        <Button variant={"primary"}>Log In</Button>
-                        <Button variant={"secondary"}>Sign Up</Button>
+                        <Button variant={"primary"} onClick={() => {
+                            window.location.href = "/login"
+                        }}>Log In</Button>
+                        <Button variant={"secondary"} onClick={() => {
+                            window.location.href = "/register"
+                        }}>Sign Up</Button>
                     </div>
 
                 </div>

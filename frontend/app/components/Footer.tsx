@@ -1,8 +1,8 @@
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Facebook, Instagram, X, Youtube } from 'lucide-react';
 
 export function Footer() {
     return (
-        <footer className="bg-gray-50 border-t">
+        <footer className="bg-[--background] border-t border-gray-200 text-[--foreground]">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                     <div>
@@ -18,7 +18,7 @@ export function Footer() {
                                 <Instagram className="h-5 w-5" />
                             </button>
                             <button className="hover:text-gray-600 transition-colors">
-                                <Twitter className="h-5 w-5" />
+                                <X className="h-5 w-5" />
                             </button>
                             <button className="hover:text-gray-600 transition-colors">
                                 <Youtube className="h-5 w-5" />
@@ -57,7 +57,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t text-center text-sm text-gray-600">
+                <div className="pt-8 border-t border-gray-200 text-center text-sm text-gray-600">
                     <p>&copy; 2025 MarketHub. All rights reserved.</p>
                 </div>
             </div>

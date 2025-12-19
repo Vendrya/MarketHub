@@ -1,16 +1,18 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
-  name = "nextjs-shell";
+  name = "MarketHub Dev Shell";
 
   buildInputs = [
     pkgs.nodejs_24
+    pkgs.jdk21
   ];
 
   shellHook = ''
-    echo "Next.js dev shell"
     node -v
     npm -v
     npx -v
+    java -version
+    javac -version
   '';
 }
