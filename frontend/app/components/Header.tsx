@@ -8,6 +8,7 @@ export function Header() {
     const [searchQuery, setSearchQuery] = useState('');
 
     // TODO: Implement search functionality by querying the backend API for tagged products
+    // TODO: Create context to manage Login state across the app
     const handleSearch = async () => {
         if (!searchQuery.trim()) return;
         try {
@@ -22,7 +23,7 @@ export function Header() {
     };
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/55 backdrop-blur h-16 border-b border-gray-200 px-10">
+        <header className="sticky top-0 z-50 w-full bg-[--background]/55 backdrop-blur h-16 border-b border-gray-200 px-10">
             <div className="w-full flex items-center justify-center">
                 <div className="h-16 text-zinc-900 flex flex-row items-center justify-baseline w-full max-w-7xl">
 
