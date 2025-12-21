@@ -4,6 +4,7 @@ import com.markethub.dto.ProductDetailResponse;
 import com.markethub.dto.ProductListResponse;
 import com.markethub.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,7 +18,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductListResponse>> getAllProducts() {
+    public ResponseEntity<List<ProductListResponse>> getAllProducts(@RequestParam(value = "category", required = false) String category) {
+        if (category != null) {
+            return ResponseEntity.ok(productService.getProductsByCategory(category));
+        }
+
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
