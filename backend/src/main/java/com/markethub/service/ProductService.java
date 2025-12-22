@@ -67,6 +67,11 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public void deleteProduct(UUID id) {
+        Product product = productRepository.findById(id).orElseThrow();
+        productRepository.delete(product);
+    }
+
     private ProductListResponse mapToListResponse(Product product) {
         return ProductListResponse.builder()
                 .id(product.getId())

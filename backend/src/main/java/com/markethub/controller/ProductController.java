@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -44,4 +45,11 @@ public class ProductController {
         productService.updateProduct(request, id);
         return ResponseEntity.ok(request);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") UUID id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok(Map.of("message", "deleted product"));
+    }
+
 }
