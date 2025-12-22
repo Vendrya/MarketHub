@@ -30,6 +30,10 @@ public class ProductService {
         return mapToDetailResponse(product);
     }
 
+    public List<ProductListResponse> getProductsByCategory(String categoryName) {
+        return productRepository.findByCategory(categoryName).stream().map(this::mapToListResponse).toList();
+    }
+
     private ProductListResponse mapToListResponse(Product product) {
         return ProductListResponse.builder()
                 .id(product.getId())
