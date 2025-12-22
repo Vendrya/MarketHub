@@ -59,11 +59,13 @@ public class AuthService {
                 .build();
     }
 
-    public AuthResponse refreshToken(String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new IllegalArgumentException("Token inválido");
+    public AuthResponse refreshToken(String token) {
+        if (token == null) {
+            throw new IllegalArgumentException("Token was not provided");
         }
-        final String refreshToken = authHeader.substring(7);
+
+        final String refreshToken = token.startsWith("Bearer ") ? token.substring(7) : token;
+
         final String userEmail = jwtService.extractUsername(refreshToken);
 
         if (userEmail != null) {
@@ -76,6 +78,6 @@ public class AuthService {
                         .build();
             }
         }
-        throw new IllegalArgumentException("Token expirado o inválido");
+        throw new IllegalArgumentException("Token expired or invalid");
     }
 }
