@@ -3,6 +3,7 @@ package com.markethub.service;
 import com.markethub.dto.ProductCreateRequest;
 import com.markethub.dto.ProductDetailResponse;
 import com.markethub.dto.ProductListResponse;
+import com.markethub.dto.ProductUpdateRequest;
 import com.markethub.model.*;
 import com.markethub.repository.CategoryRepository;
 import com.markethub.repository.ProductRepository;
@@ -51,7 +52,20 @@ public class ProductService {
                 .build();
 
         productRepository.save(newProduct);
-      }
+    }
+
+    public void updateProduct(ProductUpdateRequest request, UUID id) {
+        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+
+        Product product = productRepository.findById(id).orElseThrow();
+        product.setTitle(request.getTitle());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStatus(request.getProductStatus());
+        product.setCategory(category);
+
+        productRepository.save(product);
+    }
 
     private ProductListResponse mapToListResponse(Product product) {
         return ProductListResponse.builder()

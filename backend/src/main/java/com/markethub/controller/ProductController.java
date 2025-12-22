@@ -3,6 +3,7 @@ package com.markethub.controller;
 import com.markethub.dto.ProductCreateRequest;
 import com.markethub.dto.ProductDetailResponse;
 import com.markethub.dto.ProductListResponse;
+import com.markethub.dto.ProductUpdateRequest;
 import com.markethub.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,12 @@ public class ProductController {
     @PostMapping()
     public ResponseEntity<?> createProduct(@RequestBody ProductCreateRequest request) {
         productService.createProduct(request);
+        return ResponseEntity.ok(request);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable("id") UUID id) {
+        productService.updateProduct(request, id);
         return ResponseEntity.ok(request);
     }
 }
