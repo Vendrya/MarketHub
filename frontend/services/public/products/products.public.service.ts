@@ -1,5 +1,6 @@
 import { publicHttp } from "@/services/http/public.client";
 import { Product } from "./products.types";
+import { ProductCategory } from "./products.types";
 
 export const PublicProductsService = {
     getAll(): Promise<Product[]> {
@@ -10,8 +11,17 @@ export const PublicProductsService = {
         return publicHttp(`/products/${id}`);
     },
 
-    searchByTag(query: string): Promise<Product[]> {
-        const params = new URLSearchParams({ query });
-        return publicHttp(`/get-tagged-products?${params.toString()}`);
+    getByCategory(category: ProductCategory): Promise<Product[]> {
+        const params = new URLSearchParams({ category });
+        return publicHttp(`/products/by-category?${params.toString()}`);
     },
+
+    suggest(query: string, limit = 10): Promise<Product[]> {
+        const params = new URLSearchParams({
+            query,
+            limit: String(limit),
+        });
+
+        return publicHttp(`/search/suggest?${params.toString()}`);
+    }
 };
