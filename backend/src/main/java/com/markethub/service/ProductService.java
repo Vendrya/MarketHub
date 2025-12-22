@@ -55,9 +55,13 @@ public class ProductService {
     }
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
 
+
         Product product = productRepository.findById(id).orElseThrow();
+        if (!principal.getId().equals(product.getSeller().getId())) throw new RuntimeException("You do not own the product.");
+
         product.setTitle(request.getTitle());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
