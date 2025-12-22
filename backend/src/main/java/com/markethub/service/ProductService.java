@@ -1,11 +1,14 @@
 package com.markethub.service;
 
+import com.markethub.dto.ProductCreateRequest;
 import com.markethub.dto.ProductDetailResponse;
 import com.markethub.dto.ProductListResponse;
-import com.markethub.model.Product;
-import com.markethub.model.ProductExportCountry;
+import com.markethub.model.*;
+import com.markethub.repository.CategoryRepository;
 import com.markethub.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     public List<ProductListResponse> getAllProducts() {
         return productRepository.findAll().stream()
@@ -33,6 +37,22 @@ public class ProductService {
     public List<ProductListResponse> getProductsByCategory(String categoryName) {
         return productRepository.findByCategory(categoryName).stream().map(this::mapToListResponse).toList();
     }
+
+    public void createProduct(ProductCreateRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+
+        Product newProduct = Product.builder()
+                .seller((User) principal)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .status(ProductStatus.ACTIVE)
+                .category(category)
+                .build();
+
+        productRepository.save(newProduct);
+      }
 
     private ProductListResponse mapToListResponse(Product product) {
         return ProductListResponse.builder()
