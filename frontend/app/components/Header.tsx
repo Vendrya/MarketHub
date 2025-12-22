@@ -3,24 +3,20 @@ import { Search } from 'lucide-react';
 import { Module } from './ui/navigation-button';
 import { Button } from './ui/button';
 import { useState } from 'react';
+import { useProductSearch } from '@/services/hooks/useProductSearch';
 
 export function Header() {
     const [searchQuery, setSearchQuery] = useState('');
+    const {
+        search: searchBar,
+        results: searchBarResults,
+        loading: searchBarLoading,
+        error: searchBarError,
+    } = useProductSearch();
 
     // TODO: Implement search functionality by querying the backend API for tagged products
     // TODO: Create context to manage Login state across the app
-    const handleSearch = async () => {
-        if (!searchQuery.trim()) return;
-        try {
-            const res = await fetch(`/get-tagged-products?query=${encodeURIComponent(searchQuery)}`);
-            if (!res.ok) throw new Error('Error fetching products');
-            const data = await res.json();
-            console.log('Tagged products:', data);
 
-        } catch (error) {
-            console.error('Search error:', error);
-        }
-    };
 
     return (
         <header className="sticky top-0 z-50 w-full bg-[--background]/55 backdrop-blur h-16 border-b border-gray-200 px-10">
@@ -50,15 +46,13 @@ export function Header() {
 
                     <div className='flex-1 justify-center hidden lg:flex'>
                         <div className="border border-zinc-300 hover:border-zinc-600 duration-300 px-3 py-2 rounded-lg flex items-center justify-center gap-2">
-                            <button onClick={handleSearch}>
-                                <Search className="h-5 w-5" />
-                            </button>
+                            <Search className="h-5 w-5" />
                             <input
                                 className="outline-none bg-transparent"
                                 placeholder="Search products..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+                                onKeyDown={(e) => { if (e.key === 'Enter') { searchBar(searchQuery); } }}
                             />
                         </div>
                     </div>
