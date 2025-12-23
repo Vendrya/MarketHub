@@ -1,13 +1,16 @@
 package com.markethub.controller;
 
+import com.markethub.dto.ProductCreateRequest;
 import com.markethub.dto.ProductDetailResponse;
 import com.markethub.dto.ProductListResponse;
+import com.markethub.dto.ProductUpdateRequest;
 import com.markethub.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -30,4 +33,23 @@ public class ProductController {
     public ResponseEntity<ProductDetailResponse> getProductById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
+
+    @PostMapping()
+    public ResponseEntity<?> createProduct(@RequestBody ProductCreateRequest request) {
+        productService.createProduct(request);
+        return ResponseEntity.ok(request);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable("id") UUID id) {
+        productService.updateProduct(request, id);
+        return ResponseEntity.ok(request);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") UUID id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok(Map.of("message", "deleted product"));
+    }
+
 }
