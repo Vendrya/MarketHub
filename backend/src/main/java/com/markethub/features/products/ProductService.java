@@ -1,12 +1,16 @@
-package com.markethub.service;
+package com.markethub.features.products;
 
-import com.markethub.dto.ProductCreateRequest;
-import com.markethub.dto.ProductDetailResponse;
-import com.markethub.dto.ProductListResponse;
-import com.markethub.dto.ProductUpdateRequest;
-import com.markethub.model.*;
-import com.markethub.repository.CategoryRepository;
-import com.markethub.repository.ProductRepository;
+import com.markethub.features.products.dto.ProductCreateRequest;
+import com.markethub.features.products.dto.ProductDetailResponse;
+import com.markethub.features.products.dto.ProductListResponse;
+import com.markethub.features.products.dto.ProductUpdateRequest;
+import com.markethub.features.products.models.Category;
+import com.markethub.features.products.models.Product;
+import com.markethub.features.products.models.ProductExportCountry;
+import com.markethub.features.products.models.ProductStatus;
+import com.markethub.features.products.repository.ProductRepository;
+import com.markethub.features.user.models.User;
+import com.markethub.features.products.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

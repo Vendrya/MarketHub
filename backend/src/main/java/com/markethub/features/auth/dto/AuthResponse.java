@@ -1,4 +1,4 @@
-package com.markethub.dto;
+package com.markethub.features.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

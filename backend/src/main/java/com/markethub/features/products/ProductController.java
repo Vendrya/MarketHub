@@ -1,10 +1,9 @@
-package com.markethub.controller;
+package com.markethub.features.products;
 
-import com.markethub.dto.ProductCreateRequest;
-import com.markethub.dto.ProductDetailResponse;
-import com.markethub.dto.ProductListResponse;
-import com.markethub.dto.ProductUpdateRequest;
-import com.markethub.service.ProductService;
+import com.markethub.features.products.dto.ProductCreateRequest;
+import com.markethub.features.products.dto.ProductDetailResponse;
+import com.markethub.features.products.dto.ProductListResponse;
+import com.markethub.features.products.dto.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
-package com.markethub.repository;
+package com.markethub.features.products.repository;
 
-import com.markethub.model.Product;
+import com.markethub.features.products.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

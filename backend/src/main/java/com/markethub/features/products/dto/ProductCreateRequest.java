@@ -1,4 +1,4 @@
-package com.markethub.dto;
+package com.markethub.features.products.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
