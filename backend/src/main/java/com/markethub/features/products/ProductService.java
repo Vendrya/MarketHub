@@ -44,7 +44,7 @@ public class ProductService {
 
     public void createProduct(ProductCreateRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
         Product newProduct = Product.builder()
                 .seller((User) principal)
@@ -60,7 +60,7 @@ public class ProductService {
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
 
         Product product = productRepository.findById(id).orElseThrow();

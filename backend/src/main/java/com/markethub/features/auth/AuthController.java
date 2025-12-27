@@ -6,6 +6,7 @@ import com.markethub.features.auth.dto.RegisterRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(
-            @RequestBody RegisterRequest request,
+            @Valid @RequestBody RegisterRequest request,
             HttpServletResponse response
     ) {
         AuthResponse authResponse = authService.register(request);
@@ -41,7 +42,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
-            @RequestBody LoginRequest request,
+            @Valid @RequestBody LoginRequest request,
             HttpServletResponse response
     ) {
         AuthResponse authResponse = authService.login(request);
