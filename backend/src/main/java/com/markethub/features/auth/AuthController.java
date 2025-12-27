@@ -1,9 +1,8 @@
-package com.markethub.controller;
+package com.markethub.features.auth;
 
-import com.markethub.dto.AuthResponse;
-import com.markethub.dto.LoginRequest;
-import com.markethub.dto.RegisterRequest;
-import com.markethub.service.AuthService;
+import com.markethub.features.auth.dto.AuthResponse;
+import com.markethub.features.auth.dto.LoginRequest;
+import com.markethub.features.auth.dto.RegisterRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,11 +1,11 @@
-package com.markethub.service;
+package com.markethub.features.auth;
 
-import com.markethub.dto.AuthResponse;
-import com.markethub.dto.LoginRequest;
-import com.markethub.dto.RegisterRequest;
-import com.markethub.model.Role;
-import com.markethub.model.User;
-import com.markethub.repository.UserRepository;
+import com.markethub.features.auth.dto.AuthResponse;
+import com.markethub.features.auth.dto.LoginRequest;
+import com.markethub.features.auth.dto.RegisterRequest;
+import com.markethub.features.user.models.Role;
+import com.markethub.features.user.models.User;
+import com.markethub.features.user.repository.UserRepository;
 import com.markethub.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
