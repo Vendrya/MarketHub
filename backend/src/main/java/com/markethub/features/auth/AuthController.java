@@ -6,10 +6,8 @@ import com.markethub.features.auth.dto.RegisterRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
 
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
-
-    @Value("${application.security.jwt.refresh-token.expiration}")
-    private long refreshExpiration;
-
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(
-            @RequestBody RegisterRequest request,
+            @Valid @RequestBody RegisterRequest request,
             HttpServletResponse response
     ) {
         AuthResponse authResponse = authService.register(request);
-        setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
+        authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
@@ -41,11 +33,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
-            @RequestBody LoginRequest request,
+            @Valid @RequestBody LoginRequest request,
             HttpServletResponse response
     ) {
         AuthResponse authResponse = authService.login(request);
-        setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
+        authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
@@ -72,7 +64,7 @@ public class AuthController {
 
         AuthResponse authResponse = authService.refreshToken(refreshToken);
 
-        setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
+        authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
@@ -80,25 +72,5 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
-    private void setTokenCookies(HttpServletResponse response, String accessToken, String refreshToken) {
-        ResponseCookie accessCookie = ResponseCookie.from("access_token", accessToken)
-                .httpOnly(true)
-                .secure(false)        // 'true' for HTTPS in production
-                .path("/")
-                .maxAge(jwtExpiration / 1000)
-                .sameSite("Strict")
-                .build();
 
-        // Cookie de Refresh Token
-        ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .maxAge(refreshExpiration / 1000)
-                .sameSite("Strict")
-                .build();
-
-        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
-        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
-    }
 }

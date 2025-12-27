@@ -4,6 +4,7 @@ import com.markethub.features.products.dto.ProductCreateRequest;
 import com.markethub.features.products.dto.ProductDetailResponse;
 import com.markethub.features.products.dto.ProductListResponse;
 import com.markethub.features.products.dto.ProductUpdateRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +35,13 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createProduct(@RequestBody ProductCreateRequest request) {
+    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductCreateRequest request) {
         productService.createProduct(request);
         return ResponseEntity.ok(request);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable("id") UUID id) {
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductUpdateRequest request, @PathVariable("id") UUID id) {
         productService.updateProduct(request, id);
         return ResponseEntity.ok(request);
     }
