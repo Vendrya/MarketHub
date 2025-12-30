@@ -1,5 +1,6 @@
 package com.markethub.handlers;
 
+import com.markethub.common.response.ResponseBuilder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 public class GlobalExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+  public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
 
     ex.getBindingResult().getAllErrors().forEach(error -> {
@@ -25,7 +26,7 @@ public class GlobalExceptionHandler {
       errors.put(fieldName, errorMessage);
     });
 
-    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    return ResponseBuilder.error("Incorrect values", errors, HttpStatus.BAD_REQUEST);
   }
 
 }
