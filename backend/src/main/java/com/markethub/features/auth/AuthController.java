@@ -1,5 +1,6 @@
 package com.markethub.features.auth;
 
+import com.markethub.common.response.ResponseBuilder;
 import com.markethub.features.auth.dto.AuthResponse;
 import com.markethub.features.auth.dto.LoginRequest;
 import com.markethub.features.auth.dto.RegisterRequest;
@@ -18,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(
+    public ResponseEntity<?> register(
             @Valid @RequestBody RegisterRequest request,
             HttpServletResponse response
     ) {
@@ -28,11 +29,11 @@ public class AuthController {
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseEntity.ok(authResponse);
+        return ResponseBuilder.ok("Successful registration!", null);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(
+    public ResponseEntity<?> login(
             @Valid @RequestBody LoginRequest request,
             HttpServletResponse response
     ) {
@@ -42,11 +43,11 @@ public class AuthController {
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseEntity.ok(authResponse);
+        return ResponseBuilder.ok("Successful login!", null);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthResponse> refresh(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = null;
 
         if (request.getCookies() != null) {
@@ -69,7 +70,7 @@ public class AuthController {
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseEntity.ok(authResponse);
+        return ResponseBuilder.ok("Refreshed token", null);
     }
 
 

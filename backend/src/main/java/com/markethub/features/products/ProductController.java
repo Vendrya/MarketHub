@@ -1,16 +1,13 @@
 package com.markethub.features.products;
 
+import com.markethub.common.response.ResponseBuilder;
 import com.markethub.features.products.dto.ProductCreateRequest;
-import com.markethub.features.products.dto.ProductDetailResponse;
-import com.markethub.features.products.dto.ProductListResponse;
 import com.markethub.features.products.dto.ProductUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -21,35 +18,35 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductListResponse>> getAllProducts(@RequestParam(value = "category", required = false) String category) {
+    public ResponseEntity<?> getAllProducts(@RequestParam(value = "category", required = false) String category) {
         if (category != null) {
-            return ResponseEntity.ok(productService.getProductsByCategory(category));
+            return ResponseBuilder.ok("Get products by category", productService.getProductsByCategory(category));
         }
 
-        return ResponseEntity.ok(productService.getAllProducts());
+        return ResponseBuilder.ok("Get all products", productService.getAllProducts());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDetailResponse> getProductById(@PathVariable("id") UUID id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+    public ResponseEntity<?> getProductById(@PathVariable("id") UUID id) {
+        return ResponseBuilder.ok("Get a product", productService.getProductById(id));
     }
 
     @PostMapping()
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductCreateRequest request) {
         productService.createProduct(request);
-        return ResponseEntity.ok(request);
+        return ResponseBuilder.ok("Product created", request);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductUpdateRequest request, @PathVariable("id") UUID id) {
         productService.updateProduct(request, id);
-        return ResponseEntity.ok(request);
+        return ResponseBuilder.ok("Product updated", request);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") UUID id) {
         productService.deleteProduct(id);
-        return ResponseEntity.ok(Map.of("message", "deleted product"));
+        return ResponseBuilder.ok("Product deleted", null);
     }
 
 }
