@@ -1,17 +1,13 @@
 package com.markethub.features.products;
 
-import com.markethub.common.response.ApiResponse;
 import com.markethub.common.response.ResponseBuilder;
 import com.markethub.features.products.dto.ProductCreateRequest;
-import com.markethub.features.products.dto.ProductDetailResponse;
-import com.markethub.features.products.dto.ProductListResponse;
 import com.markethub.features.products.dto.ProductUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

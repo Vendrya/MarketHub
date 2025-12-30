@@ -1,6 +1,5 @@
 package com.markethub.features.auth;
 
-import com.markethub.common.response.ApiResponse;
 import com.markethub.common.response.ResponseBuilder;
 import com.markethub.features.auth.dto.AuthResponse;
 import com.markethub.features.auth.dto.LoginRequest;
