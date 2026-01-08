@@ -1,6 +1,6 @@
 package com.markethub.config;
 
-import com.markethub.repository.UserRepository;
+import com.markethub.features.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
-package com.markethub.model;
+package com.markethub.features.products.models;
 
+import com.markethub.features.user.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
