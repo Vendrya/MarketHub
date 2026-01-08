@@ -19,7 +19,7 @@ public class UserService {
 		User profile = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 		return ProfileSummary.builder()
 				.id(profile.getId())
-				.username(profile.getUsername())
+				.username(profile.getAccountUsername())
 				.role(profile.getRole())
 				.enabled(profile.isEnabled())
 				.accountNonLocked(profile.isAccountNonLocked())

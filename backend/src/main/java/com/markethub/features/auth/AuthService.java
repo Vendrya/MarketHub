@@ -20,94 +20,96 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
+	@Value("${application.security.jwt.expiration}")
+	private long jwtExpiration;
 
-    @Value("${application.security.jwt.refresh-token.expiration}")
-    private long refreshExpiration;
+	@Value("${application.security.jwt.refresh-token.expiration}")
+	private long refreshExpiration;
 
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
-    private final JwtService jwtService;
+	private final AuthenticationManager authenticationManager;
+	private final PasswordEncoder passwordEncoder;
+	private final UserRepository userRepository;
+	private final JwtService jwtService;
 
-    public AuthResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .userName(request.getUserName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
+	public AuthResponse register(RegisterRequest request) {
+		User user = User.builder()
+				.userName(request.getUserName())
+				.email(request.getEmail())
+				.password(passwordEncoder.encode(request.getPassword()))
+				.role(Role.USER)
+				.build();
 
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+		User savedUser = userRepository.save(user);
+		String jwtToken = jwtService.generateToken(savedUser);
+		String refreshToken = jwtService.generateRefreshToken(savedUser);
 
-        return AuthResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
-    }
+		return AuthResponse.builder()
+				.accessToken(jwtToken)
+				.refreshToken(refreshToken)
+				.userName(savedUser.getAccountUsername())
+				.email(savedUser.getEmail())
+				.build();
+	}
 
-    public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+	public AuthResponse login(LoginRequest request) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+				request.getEmail(),
+				request.getPassword()));
 
-        return AuthResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
-    }
+		User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+		String jwtToken = jwtService.generateToken(user);
+		String refreshToken = jwtService.generateRefreshToken(user);
 
-    public AuthResponse refreshToken(String token) {
-        if (token == null) {
-            throw new IllegalArgumentException("Token was not provided");
-        }
+		return AuthResponse.builder()
+				.accessToken(jwtToken)
+				.refreshToken(refreshToken)
+				.userName(user.getAccountUsername())
+				.email(user.getEmail())
+				.build();
+	}
 
-        final String refreshToken = token.startsWith("Bearer ") ? token.substring(7) : token;
+	public AuthResponse refreshToken(String token) {
+		if (token == null) {
+			throw new IllegalArgumentException("Token was not provided");
+		}
 
-        final String userEmail = jwtService.extractUsername(refreshToken);
+		final String refreshToken = token.startsWith("Bearer ") ? token.substring(7) : token;
 
-        if (userEmail != null) {
-            var user = this.userRepository.findByEmail(userEmail).orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
-                return AuthResponse.builder()
-                        .accessToken(accessToken)
-                        .refreshToken(refreshToken)
-                        .build();
-            }
-        }
-        throw new IllegalArgumentException("Token expired or invalid");
-    }
+		final String userEmail = jwtService.extractUsername(refreshToken);
 
-    public void setTokenCookies(HttpServletResponse response, String accessToken, String refreshToken) {
-        ResponseCookie accessCookie = ResponseCookie.from("access_token", accessToken)
-                .httpOnly(true)
-                .secure(false)        // TODO: use environment system for set 'true' in production environment or 'false' in dev environment
-                .path("/")
-                .maxAge(jwtExpiration / 1000)
-                .sameSite("Strict")
-                .build();
+		if (userEmail != null) {
+			User user = this.userRepository.findByEmail(userEmail).orElseThrow();
+			if (jwtService.isTokenValid(refreshToken, user)) {
+				String accessToken = jwtService.generateToken(user);
+				return AuthResponse.builder()
+						.accessToken(accessToken)
+						.refreshToken(refreshToken)
+						.build();
+			}
+		}
+		throw new IllegalArgumentException("Token expired or invalid");
+	}
 
-        // Cookie de Refresh Token
-        ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .maxAge(refreshExpiration / 1000)
-                .sameSite("Strict")
-                .build();
+	public void setTokenCookies(HttpServletResponse response, String accessToken, String refreshToken) {
+		ResponseCookie accessCookie = ResponseCookie.from("access_token", accessToken)
+				.httpOnly(true)
+				.secure(false) // TODO: use environment system for set 'true' in production environment or
+								// 'false' in dev environment
+				.path("/")
+				.maxAge(jwtExpiration / 1000)
+				.sameSite("Strict")
+				.build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
-        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
-    }
+		// Cookie de Refresh Token
+		ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
+				.httpOnly(true)
+				.secure(false)
+				.path("/")
+				.maxAge(refreshExpiration / 1000)
+				.sameSite("Strict")
+				.build();
+
+		response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+		response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+	}
 }
