@@ -1,4 +1,5 @@
 "use client";
+import { publicHttp } from "@/services/http/public.client";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
 
@@ -32,19 +33,13 @@ export default function Register() {
                     }
 
                     try {
-                        const res = await fetch("/api/register", {
+                        const res = publicHttp("/auth/register", {
                             method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
                             body: JSON.stringify({ firstName, lastName, email, password }),
                         });
-                        const data = await res.json();
-                        if (data.error) {
-                            setError(data.error);
-                        } else {
-                            window.location.href = "/login";
-                        }
+                        await res;
+                        console.log("Registration successful:", res);
+                        //window.location.href = "/login";
                     } catch (err) {
                         setError("An error occurred during registration.");
                     }

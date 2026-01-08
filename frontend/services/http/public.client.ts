@@ -3,7 +3,7 @@ export async function publicHttp<T>(
     options?: RequestInit
 ): Promise<T> {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${url}`,
+        `${process.env.API_URL}${url}`,
         {
             ...options,
             credentials: "omit",
