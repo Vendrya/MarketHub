@@ -25,6 +25,9 @@ public class AuthController {
         AuthResponse authResponse = authService.register(request);
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
+        authResponse.setAccessToken(null);
+        authResponse.setRefreshToken(null);
+
         return ResponseBuilder.ok("Successful registration!", authResponse);
     }
 
@@ -34,6 +37,9 @@ public class AuthController {
             HttpServletResponse response) {
         AuthResponse authResponse = authService.login(request);
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
+
+        authResponse.setAccessToken(null);
+        authResponse.setRefreshToken(null);
 
         return ResponseBuilder.ok("Successful login!", authResponse);
     }
@@ -57,6 +63,9 @@ public class AuthController {
 
         AuthResponse authResponse = authService.refreshToken(refreshToken);
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
+
+        authResponse.setAccessToken(null);
+        authResponse.setRefreshToken(null);
 
         return ResponseBuilder.ok("Refreshed token", authResponse);
     }

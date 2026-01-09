@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileSummary {
     private UUID id;
-    private String username;
+    private String firstName;
+    private String lastName;
     private Role role;
     private boolean enabled;
     private boolean accountNonLocked;
