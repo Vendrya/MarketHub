@@ -33,7 +33,8 @@ public class AuthService {
 
 	public AuthResponse register(RegisterRequest request) {
 		User user = User.builder()
-				.userName(request.getUserName())
+				.firstName(request.getFirstName())
+				.lastName(request.getLastName())
 				.email(request.getEmail())
 				.password(passwordEncoder.encode(request.getPassword()))
 				.role(Role.USER)
@@ -46,8 +47,10 @@ public class AuthService {
 		return AuthResponse.builder()
 				.accessToken(jwtToken)
 				.refreshToken(refreshToken)
-				.userName(savedUser.getAccountUsername())
+				.firstName(savedUser.getFirstName())
+				.lastName(savedUser.getLastName())
 				.email(savedUser.getEmail())
+				.role(savedUser.getRole().name())
 				.build();
 	}
 
@@ -63,8 +66,10 @@ public class AuthService {
 		return AuthResponse.builder()
 				.accessToken(jwtToken)
 				.refreshToken(refreshToken)
-				.userName(user.getAccountUsername())
+				.firstName(user.getFirstName())
+				.lastName(user.getLastName())
 				.email(user.getEmail())
+				.role(user.getRole().name())
 				.build();
 	}
 

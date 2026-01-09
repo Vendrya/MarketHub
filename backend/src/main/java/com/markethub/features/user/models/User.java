@@ -23,7 +23,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String userName;
+    private String firstName;
+    private String lastName;
 
     @Column(unique = true)
     private String email;
@@ -38,8 +39,8 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    public String getAccountUsername() {
-        return userName;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Override
