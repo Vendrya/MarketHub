@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +25,9 @@ public class AuthService {
 
     @Value("${application.security.jwt.refresh-token.expiration}")
     private long refreshExpiration;
+
+    @Value("${application.cookie.secure}")
+    private boolean cookieSecure;
 
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
@@ -99,8 +101,7 @@ public class AuthService {
     public void setTokenCookies(HttpServletResponse response, String accessToken, String refreshToken) {
         ResponseCookie accessCookie = ResponseCookie.from("access_token", accessToken)
                 .httpOnly(true)
-                .secure(false) // TODO: use environment system for set 'true' in production environment or
-                               // 'false' in dev environment
+                .secure(cookieSecure)
                 .path("/")
                 .maxAge(jwtExpiration / 1000)
                 .sameSite("Strict")
@@ -109,7 +110,7 @@ public class AuthService {
         // Cookie de Refresh Token
         ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .httpOnly(true)
-                .secure(false)
+                .secure(cookieSecure)
                 .path("/")
                 .maxAge(refreshExpiration / 1000)
                 .sameSite("Strict")
