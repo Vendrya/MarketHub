@@ -18,4 +18,8 @@ public class TagService {
         return tagRepository.findAll();
     }
 
+    public Tag getTagById(String id) {
+        return tagRepository.findById(id).orElseThrow(() -> new RuntimeException("Tag " + id + " no encontrado"));
+    }
+
 }
