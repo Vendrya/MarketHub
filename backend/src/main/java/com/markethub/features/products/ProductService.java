@@ -46,6 +46,10 @@ public class ProductService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
+        for (String i : request.getTags()) {
+            System.out.println(i);
+        }
+
         Product newProduct = Product.builder()
                 .seller((User) principal)
                 .title(request.getTitle())
@@ -55,16 +59,16 @@ public class ProductService {
                 .category(category)
                 .build();
 
-        productRepository.save(newProduct);
+        // productRepository.save(newProduct);
     }
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
-
         Product product = productRepository.findById(id).orElseThrow();
-        if (!principal.getId().equals(product.getSeller().getId())) throw new RuntimeException("You do not own the product.");
+        if (!principal.getId().equals(product.getSeller().getId()))
+            throw new RuntimeException("You do not own the product.");
 
         product.setTitle(request.getTitle());
         product.setDescription(request.getDescription());
