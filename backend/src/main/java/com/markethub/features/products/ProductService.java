@@ -50,7 +50,8 @@ public class ProductService {
 
     public void createProduct(ProductCreateRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         List<Tag> tags = request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList();
 
@@ -69,7 +70,8 @@ public class ProductService {
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
