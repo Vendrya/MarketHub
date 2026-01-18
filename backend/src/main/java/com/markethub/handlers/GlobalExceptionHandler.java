@@ -35,4 +35,8 @@ public class GlobalExceptionHandler {
         return ResponseBuilder.error("Error 404", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseBuilder.error("Error 400", ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
