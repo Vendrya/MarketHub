@@ -92,8 +92,13 @@ public class ProductService {
     }
 
     public void deleteProduct(UUID id) {
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        if (!principal.getId().equals(product.getSeller().getId()))
+            throw new IllegalArgumentException("You do not own the product.");
+
         productRepository.delete(product);
     }
 
