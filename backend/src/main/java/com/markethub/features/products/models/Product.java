@@ -1,5 +1,6 @@
 package com.markethub.features.products.models;
 
+import com.markethub.features.categories.models.Category;
 import com.markethub.features.tags.models.Tag;
 import com.markethub.features.user.models.User;
 import jakarta.persistence.*;

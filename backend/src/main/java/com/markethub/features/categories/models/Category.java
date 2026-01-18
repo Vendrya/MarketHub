@@ -1,4 +1,4 @@
-package com.markethub.features.products.models;
+package com.markethub.features.categories.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

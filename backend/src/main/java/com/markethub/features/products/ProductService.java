@@ -1,10 +1,10 @@
 package com.markethub.features.products;
 
+import com.markethub.features.categories.models.Category;
 import com.markethub.features.products.dto.ProductCreateRequest;
 import com.markethub.features.products.dto.ProductDetailResponse;
 import com.markethub.features.products.dto.ProductListResponse;
 import com.markethub.features.products.dto.ProductUpdateRequest;
-import com.markethub.features.products.models.Category;
 import com.markethub.features.products.models.Product;
 import com.markethub.features.products.models.ProductExportCountry;
 import com.markethub.features.products.models.ProductStatus;
