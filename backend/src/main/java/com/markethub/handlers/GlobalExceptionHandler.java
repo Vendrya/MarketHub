@@ -1,5 +1,6 @@
 package com.markethub.handlers;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
 import com.markethub.common.response.ResponseBuilder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -15,18 +16,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
-    Map<String, String> errors = new HashMap<>();
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
 
-    ex.getBindingResult().getAllErrors().forEach(error -> {
-      String fieldName = ((FieldError) error).getField();
-      String errorMessage = error.getDefaultMessage();
-      errors.put(fieldName, errorMessage);
-    });
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
 
-    return ResponseBuilder.error("Incorrect values", errors, HttpStatus.BAD_REQUEST);
-  }
+        return ResponseBuilder.error("Incorrect values", errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return ResponseBuilder.error("Error 404", ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
 }

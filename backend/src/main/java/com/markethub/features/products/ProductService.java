@@ -1,5 +1,6 @@
 package com.markethub.features.products;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
 import com.markethub.features.categories.models.Category;
 import com.markethub.features.products.dto.ProductCreateRequest;
 import com.markethub.features.products.dto.ProductDetailResponse;
@@ -38,7 +39,7 @@ public class ProductService {
 
     public ProductDetailResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         return mapToDetailResponse(product);
     }
@@ -71,7 +72,7 @@ public class ProductService {
         Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         if (!principal.getId().equals(product.getSeller().getId()))
             throw new RuntimeException("You do not own the product.");
 
@@ -89,7 +90,8 @@ public class ProductService {
     }
 
     public void deleteProduct(UUID id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         productRepository.delete(product);
     }
 

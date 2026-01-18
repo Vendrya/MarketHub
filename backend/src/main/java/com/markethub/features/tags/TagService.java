@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
 import com.markethub.features.tags.models.Tag;
 import com.markethub.features.tags.repository.TagRepository;
 
@@ -19,7 +20,7 @@ public class TagService {
     }
 
     public Tag getTagById(String id) {
-        return tagRepository.findById(id).orElseThrow(() -> new RuntimeException("Tag " + id + " no encontrado"));
+        return tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tag " + id + " not found"));
     }
 
 }
