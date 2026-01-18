@@ -16,6 +16,8 @@ import com.markethub.features.products.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -68,13 +70,18 @@ public class ProductService {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
 
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         if (!principal.getId().equals(product.getSeller().getId()))
             throw new RuntimeException("You do not own the product.");
+
+        List<Tag> tags = new ArrayList<>(
+                request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList());
 
         product.setTitle(request.getTitle());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
+        product.setTags(tags);
         product.setStatus(request.getProductStatus());
         product.setCategory(category);
 
