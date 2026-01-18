@@ -1,6 +1,8 @@
 package com.markethub.features.products.dto;
 
 import com.markethub.features.products.models.ProductStatus;
+import com.markethub.features.tags.models.Tag;
+
 import lombok.Builder;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ public class ProductDetailResponse {
     private String title;
     private String description;
     private BigDecimal price;
+    private List<Tag> tags;
     private ProductStatus status;
     private UUID category_id;
     private LocalDateTime created_at;
