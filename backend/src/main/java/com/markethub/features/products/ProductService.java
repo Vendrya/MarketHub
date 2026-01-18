@@ -76,7 +76,7 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         if (!principal.getId().equals(product.getSeller().getId()))
-            throw new RuntimeException("You do not own the product.");
+            throw new IllegalArgumentException("You do not own the product.");
 
         List<Tag> tags = new ArrayList<>(
                 request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList());
