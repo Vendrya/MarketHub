@@ -1,5 +1,6 @@
 package com.markethub.features.auth;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
 import com.markethub.features.auth.dto.AuthResponse;
 import com.markethub.features.auth.dto.LoginRequest;
 import com.markethub.features.auth.dto.RegisterRequest;
@@ -58,13 +59,15 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
                 request.getPassword()));
-
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
 
         return AuthResponse.builder()
                 .accessToken(jwtToken)
@@ -86,7 +89,8 @@ public class AuthService {
         final String userEmail = jwtService.extractUsername(refreshToken);
 
         if (userEmail != null) {
-            User user = this.userRepository.findByEmail(userEmail).orElseThrow();
+            User user = this.userRepository.findByEmail(userEmail)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
             if (jwtService.isTokenValid(refreshToken, user)) {
                 String accessToken = jwtService.generateToken(user);
                 return AuthResponse.builder()

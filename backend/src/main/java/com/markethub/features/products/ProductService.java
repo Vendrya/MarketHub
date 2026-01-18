@@ -1,5 +1,6 @@
 package com.markethub.features.products;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
 import com.markethub.features.categories.models.Category;
 import com.markethub.features.products.dto.ProductCreateRequest;
 import com.markethub.features.products.dto.ProductDetailResponse;
@@ -38,7 +39,7 @@ public class ProductService {
 
     public ProductDetailResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         return mapToDetailResponse(product);
     }
@@ -49,7 +50,8 @@ public class ProductService {
 
     public void createProduct(ProductCreateRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         List<Tag> tags = request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList();
 
@@ -68,12 +70,13 @@ public class ProductService {
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         if (!principal.getId().equals(product.getSeller().getId()))
-            throw new RuntimeException("You do not own the product.");
+            throw new IllegalArgumentException("You do not own the product.");
 
         List<Tag> tags = new ArrayList<>(
                 request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList());
@@ -89,7 +92,13 @@ public class ProductService {
     }
 
     public void deleteProduct(UUID id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        if (!principal.getId().equals(product.getSeller().getId()))
+            throw new IllegalArgumentException("You do not own the product.");
+
         productRepository.delete(product);
     }
 
