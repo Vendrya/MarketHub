@@ -13,9 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    @NotNull(message = "Name is required")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
-    private String userName;
+    @NotNull(message = "First Name is required")
+    @Size(min = 3, max = 50, message = "First Name must be between 3 and 50 characters")
+    private String firstName;
+
+    @NotNull(message = "Last Name is required")
+    @Size(min = 3, max = 50, message = "Last Name must be between 3 and 50 characters")
+    private String lastName;
 
     @NotNull(message = "Email is required")
     @Email(message = "Email is invalid")

@@ -21,29 +21,27 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(
             @Valid @RequestBody RegisterRequest request,
-            HttpServletResponse response
-    ) {
+            HttpServletResponse response) {
         AuthResponse authResponse = authService.register(request);
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseBuilder.ok("Successful registration!", null);
+        return ResponseBuilder.ok("Successful registration!", authResponse);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @Valid @RequestBody LoginRequest request,
-            HttpServletResponse response
-    ) {
+            HttpServletResponse response) {
         AuthResponse authResponse = authService.login(request);
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseBuilder.ok("Successful login!", null);
+        return ResponseBuilder.ok("Successful login!", authResponse);
     }
 
     @PostMapping("/refresh")
@@ -64,14 +62,12 @@ public class AuthController {
         }
 
         AuthResponse authResponse = authService.refreshToken(refreshToken);
-
         authService.setTokenCookies(response, authResponse.getAccessToken(), authResponse.getRefreshToken());
 
         authResponse.setAccessToken(null);
         authResponse.setRefreshToken(null);
 
-        return ResponseBuilder.ok("Refreshed token", null);
+        return ResponseBuilder.ok("Refreshed token", authResponse);
     }
-
 
 }

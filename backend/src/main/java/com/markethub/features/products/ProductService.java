@@ -1,19 +1,24 @@
 package com.markethub.features.products;
 
+import com.markethub.common.exceptions.ResourceNotFoundException;
+import com.markethub.features.categories.models.Category;
 import com.markethub.features.products.dto.ProductCreateRequest;
 import com.markethub.features.products.dto.ProductDetailResponse;
 import com.markethub.features.products.dto.ProductListResponse;
 import com.markethub.features.products.dto.ProductUpdateRequest;
-import com.markethub.features.products.models.Category;
 import com.markethub.features.products.models.Product;
 import com.markethub.features.products.models.ProductExportCountry;
 import com.markethub.features.products.models.ProductStatus;
 import com.markethub.features.products.repository.ProductRepository;
+import com.markethub.features.tags.TagService;
+import com.markethub.features.tags.models.Tag;
 import com.markethub.features.user.models.User;
 import com.markethub.features.products.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +29,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final TagService tagService;
 
     public List<ProductListResponse> getAllProducts() {
         return productRepository.findAll().stream()
@@ -33,7 +39,7 @@ public class ProductService {
 
     public ProductDetailResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         return mapToDetailResponse(product);
     }
@@ -44,12 +50,16 @@ public class ProductService {
 
     public void createProduct(ProductCreateRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+        List<Tag> tags = request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList();
 
         Product newProduct = Product.builder()
                 .seller((User) principal)
                 .title(request.getTitle())
                 .description(request.getDescription())
+                .tags(tags)
                 .price(request.getPrice())
                 .status(ProductStatus.ACTIVE)
                 .category(category)
@@ -60,15 +70,21 @@ public class ProductService {
 
     public void updateProduct(ProductUpdateRequest request, UUID id) {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId())).orElseThrow();
+        Category category = categoryRepository.findById(UUID.fromString(request.getCategoryId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        if (!principal.getId().equals(product.getSeller().getId()))
+            throw new IllegalArgumentException("You do not own the product.");
 
-        Product product = productRepository.findById(id).orElseThrow();
-        if (!principal.getId().equals(product.getSeller().getId())) throw new RuntimeException("You do not own the product.");
+        List<Tag> tags = new ArrayList<>(
+                request.getTags().stream().map(tagName -> tagService.getTagById(tagName)).toList());
 
         product.setTitle(request.getTitle());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
+        product.setTags(tags);
         product.setStatus(request.getProductStatus());
         product.setCategory(category);
 
@@ -76,7 +92,13 @@ public class ProductService {
     }
 
     public void deleteProduct(UUID id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        if (!principal.getId().equals(product.getSeller().getId()))
+            throw new IllegalArgumentException("You do not own the product.");
+
         productRepository.delete(product);
     }
 
@@ -85,6 +107,7 @@ public class ProductService {
                 .id(product.getId())
                 .title(product.getTitle())
                 .description(product.getDescription())
+                .tags(product.getTags())
                 .price(product.getPrice())
                 .status(product.getStatus())
                 .category_id(product.getCategory().getId())
@@ -102,6 +125,7 @@ public class ProductService {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .tags(product.getTags())
                 .status(product.getStatus())
                 .category_id(product.getCategory().getId())
                 .created_at(product.getCreatedAt())
