@@ -1,0 +1,42 @@
+.globalHeader {
+  z-index: 20;
+  display: flex;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(255, 255, 255, .7);
+  backdrop-filter: blur(var(--global-blur-value));
+}
+
+.logoAndNav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logoAndNav h1 {
+  margin: .4rem 0;
+  font-size: 1.8rem;
+}
+
+.logoAndNav nav {
+  display: flex;
+  gap: 2rem;
+  font-weight: 500;
+}
+
+.logoAndNav nav a {
+  padding: clamp(2px, 0.5vw, 8px) clamp(6px, 1vw, 16px);
+  border-radius: 99px;
+}
+
+.logoAndNav nav a:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+.authButtons {
+  display: flex;
+  gap: 1rem;
+}

@@ -1,0 +1,82 @@
+.footer {
+  background-color: white;
+  color: #171717;
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footerSection {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footerSection h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.footerSection h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.footerSection p {
+  margin-bottom: 1rem;
+  color: #6b7280;
+}
+
+.footerSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerSection ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footerSection ul li a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.footerSection ul li a:hover {
+  color: #171717;
+  text-decoration: underline;
+}
+
+.footerSocial {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.footerSocial button {
+  background: none;
+  border: none;
+  color: #171717;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.footerSocial button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.footerSocial button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}

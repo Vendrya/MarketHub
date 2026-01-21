@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { useState } from 'react';
 import { useProductSearch } from '@/services/hooks/useProductSearch';
 import useAuth from './hooks/useAuth';
+import styles from '../styles/Header.module.css';
 
 export function Header() {
     const [searchQuery, setSearchQuery] = useState('');

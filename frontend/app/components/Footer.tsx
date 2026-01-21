@@ -1,4 +1,5 @@
 import { Facebook, Instagram, X, Youtube } from 'lucide-react';
+import styles from '../styles/Footer.module.css';
 
 export function Footer() {
     return (
