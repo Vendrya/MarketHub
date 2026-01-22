@@ -9,5 +9,68 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Inter, Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
+/* Default heading styles from Tailwind */
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 2.25rem;
+  margin: 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 2rem;
+  margin: 0;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+  margin: 0;
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+  margin: 0;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #ADADAD;
+  margin: 2rem 0;
+}
+
+.articleContainer {
+  width: clamp(0px, 90%, 1200px);
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

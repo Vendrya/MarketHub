@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
+import styles from './login.module.css';
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -9,9 +10,9 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className="flex items-center justify-center w-full font-sans bg-[--background] text-[--foreground]">
-            <main className="flex w-full max-w-3xl flex-col py-32 items-center">
-                <form action="" className="flex flex-col w-full max-w-lg border border-gray-300 rounded-2xl p-10 items-center justify-center" onSubmit={async (e) => {
+        <div className={styles.container}>
+            <main className={styles.main}>
+                <form action="" className={styles.form} onSubmit={async (e) => {
                     e.preventDefault();
                     setLoading(true);
                     setError("");
@@ -41,42 +42,42 @@ export default function Login() {
                     }
                     setLoading(false);
                 }}>
-                    <h1 className="text-4xl font-bold mb-5">Log In</h1>
-                    {error && <p className="text-red-500 mb-4 bg-red-200 px-5 w-full text-center py-2 border border-red-400 rounded-sm">{error}</p>}
+                    <h1 className={styles.title}>Log In</h1>
+                    {error && <p className={styles.error}>{error}</p>}
 
                     <input
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mb-4 p-2 border border-gray-300 rounded w-full"
+                        className={styles.input}
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mb-4 p-2 border border-gray-300 rounded w-full"
+                        className={styles.input}
                     />
 
                     <Button
                         type="submit"
                         disabled={loading}
-                        className="w-full mt-5"
+                        className={styles.submitButton}
                     >
                         {loading ? "Logging in..." : "Submit"}
                     </Button>
                 </form>
-                <div className=" mt-6 mb-2">
-                    <p className="text-gray-500 text-sm">New to MarketHub?</p></div>
-                <section className="">
-                    <div>
+                <div className={styles.registerPrompt}>
+                    <p className={styles.registerText}>New to MarketHub?</p></div>
+                <section className={styles.registerSection}>
+                    <div className={styles.registerButtonContainer}>
                         <Button
                             variant={"secondary"}
                             onClick={() => {
                                 window.location.href = "/register";
                             }}
-                            className="rounded-full font-medium"
+                            className={styles.registerButton}
                         >
                             Create your MarketHub account
                         </Button>

@@ -1,0 +1,57 @@
+.landingContainer {
+  .featuresGrid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+  #welcomeBanner {
+    width: 100%;
+    text-align: center;
+    margin: 4rem 0;
+    p{
+      width: 80%;
+      margin: 1rem auto 0 auto;
+      font-weight: 500;
+    }
+  }
+  #mainCTA {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    div {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+  #whyChooseUs {
+    width: 100%;
+    legend {
+      width: 80%;
+      margin: 1rem 0;
+      text-align: center;
+    }
+  }
+  #howItWorks {
+    width: 100%;
+    margin-bottom: 4rem;
+    h2 {
+      margin-bottom: 2rem;
+    }
+    h3 {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+  #finalCTA {
+    width: 100%;
+    text-align: center;
+    margin: 4rem 0;
+    h2 {
+      margin-bottom: 2rem;
+    }
+  }
+}
