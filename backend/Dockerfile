@@ -1,24 +1,21 @@
-FROM maven:3.9-eclipse-temurin-21-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /app
 
-COPY pom.xml .
+COPY go.mod go.sum ./
+RUN go mod download
 
-RUN mvn dependency:go-offline
+COPY . .
 
-COPY src ./src
+# cmd/api/main.go 
+RUN CGO_ENABLED=0 GOOS=linux go build -o markethub-api ./cmd/api
 
-RUN mvn clean package -DskipTests
+FROM alpine:latest
 
-FROM eclipse-temurin:21-jre-alpine
+WORKDIR /root/
 
-WORKDIR /src
-
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/markethub-api .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["./markethub-api"]

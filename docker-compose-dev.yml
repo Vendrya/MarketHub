@@ -37,18 +37,20 @@ services:
       - postgres
       - minio
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/markethubdb
-      SPRING_DATASOURCE_USERNAME: roots
-      SPRING_DATASOURCE_PASSWORD: roots
+      DB_HOST: postgres
+      DB_USER: roots
+      DB_PASSWORD: roots
+      DB_NAME: markethubdb
+      DB_PORT: 5432
 
       # MinIO config
       MINIO_URL: http://minio:9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET: product-images
+      MINIO_USE_SSL: "false"
     volumes:
-      - ./backend:/app/backend
-      - ~/.m2:/root/.m2
+      - ./backend:/app
 
   frontend:
     build:
