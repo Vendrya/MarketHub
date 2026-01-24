@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/vendrya/markethub/internal/helpers"
 	"github.com/vendrya/markethub/internal/modules/auth/dto"
 	"github.com/vendrya/markethub/internal/modules/auth/service"
 )
@@ -20,32 +21,32 @@ func (c *AuthController) Register(ctx *gin.Context) {
 	var req dto.RegisterRequest
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.CreateResponse(ctx, http.StatusBadRequest, "Bad request", nil, err.Error())
 		return
 	}
 
 	res, err := c.authService.Register(req)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.CreateResponse(ctx, http.StatusBadRequest, "Bad request", nil, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, res)
+	helpers.CreateResponse(ctx, http.StatusCreated, "Register!!", res, nil)
 }
 
 func (c *AuthController) Login(ctx *gin.Context) {
 	var req dto.LoginRequest
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.CreateResponse(ctx, http.StatusBadRequest, "Bad request", nil, err.Error())
 		return
 	}
 
 	res, err := c.authService.Login(req)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		helpers.CreateResponse(ctx, http.StatusUnauthorized, "Unauthorized", nil, "Invalid credentials")
 		return
 	}
 
-	ctx.JSON(http.StatusOK, res)
+	helpers.CreateResponse(ctx, http.StatusOK, "Login!!", res, nil)
 }

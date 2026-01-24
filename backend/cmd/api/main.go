@@ -10,6 +10,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/vendrya/markethub/internal/database"
+	"github.com/vendrya/markethub/internal/helpers"
 	"github.com/vendrya/markethub/internal/server"
 
 	authController "github.com/vendrya/markethub/internal/modules/auth/controller"
@@ -55,11 +56,10 @@ func main() {
 				userID, _ := c.Get("userID")
 				email, _ := c.Get("userEmail")
 
-				c.JSON(http.StatusOK, gin.H{
-					"message": "Access authorized",
+				helpers.CreateResponse(c, http.StatusOK, "Access authorized", gin.H{
 					"user_id": userID,
 					"email":   email,
-				})
+				}, nil)
 			})
 		}
 	}
