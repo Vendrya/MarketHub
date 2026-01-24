@@ -22,9 +22,13 @@ Body
 Response
 ```json
 {
-  "token": "...",
-  "email": "john.doe@example.com",
-  "role": "USER"
+  "message": "Register!!",
+  "success": true,
+  "data": {
+    "token": "...",
+    "email": "john.doe@example.com",
+    "role": "USER"
+  }
 }
 ```
 
@@ -40,8 +44,11 @@ Body
 Response
 ```json
 {
-  "token": "...",
-  "email": "john.doe@example.com",
-  "role": "USER"
-}
+  "message": "Login!!",
+  "success": true,
+  "data": {
+    "token": "...",
+    "email": "john.doe@example.com",
+    "role": "USER"
+  }
 ```
