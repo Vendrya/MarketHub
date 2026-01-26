@@ -35,6 +35,11 @@ func main() {
 		log.Fatal("Error migrating database: ", err)
 	}
 
+	log.Println("Creating data...")
+	if err := database.Seed(db); err != nil {
+		log.Fatal("Error creating default values: ", err)
+	}
+
 	uRepo := userRepo.NewUserRepository(db)
 	jwtSvc := authService.NewJwtService()
 	authSvc := authService.NewAuthService(uRepo, jwtSvc)
