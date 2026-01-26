@@ -5,6 +5,8 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+
+	products "github.com/vendrya/markethub/internal/modules/products/models"
 )
 
 type Role string
@@ -22,6 +24,8 @@ type User struct {
 
 	Email    string `gorm:"uniqueIndex;not null"`
 	Password string `gorm:"not null"`
+
+	Products []products.Product `gorm:"foreignKey:UserID"`
 
 	Role Role `gorm:"type:varchar(20);default:'USER'"`
 

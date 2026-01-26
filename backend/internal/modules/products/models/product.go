@@ -25,6 +25,8 @@ type Product struct {
 	CategoryID uuid.UUID `gorm:"type:uuid;not null"`
 	Category   *Category
 
+	UserID uuid.UUID `gorm:"type:uuid;not null"`
+
 	Tags []Tag `gorm:"many2many:product_tags"`
 
 	CreatedAt time.Time
