@@ -11,5 +11,9 @@ func Seed(db *gorm.DB) error {
 		return err
 	}
 
+	if err := productModels.SeedTags(db); err != nil {
+		return err
+	}
+
 	return nil
 }
