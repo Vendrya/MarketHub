@@ -20,8 +20,7 @@ type User struct {
 	FirstName string `gorm:"not null"`
 	LastName  string `gorm:"not null"`
 
-	Email string `gorm:"uniqueIndex;not null"`
-
+	Email    string `gorm:"uniqueIndex;not null"`
 	Password string `gorm:"not null"`
 
 	Role Role `gorm:"type:varchar(20);default:'USER'"`
