@@ -16,8 +16,11 @@ import (
 	authController "github.com/vendrya/markethub/internal/modules/auth/controller"
 	authMiddleware "github.com/vendrya/markethub/internal/modules/auth/middleware"
 	authService "github.com/vendrya/markethub/internal/modules/auth/service"
+
 	userModels "github.com/vendrya/markethub/internal/modules/user/models"
 	userRepo "github.com/vendrya/markethub/internal/modules/user/repository"
+
+	productModels "github.com/vendrya/markethub/internal/modules/products/models"
 )
 
 func main() {
@@ -28,7 +31,7 @@ func main() {
 	// _ = db
 
 	log.Println("Running database migrations...")
-	if err := db.AutoMigrate(&userModels.User{}); err != nil {
+	if err := db.AutoMigrate(&userModels.User{}, &productModels.Product{}, &productModels.Category{}, &productModels.Tag{}); err != nil {
 		log.Fatal("Error migrating database: ", err)
 	}
 
