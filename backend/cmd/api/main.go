@@ -20,7 +20,10 @@ import (
 	userModels "github.com/vendrya/markethub/internal/modules/user/models"
 	userRepo "github.com/vendrya/markethub/internal/modules/user/repository"
 
+	productController "github.com/vendrya/markethub/internal/modules/products/controller"
 	productModels "github.com/vendrya/markethub/internal/modules/products/models"
+	productRepository "github.com/vendrya/markethub/internal/modules/products/repository"
+	productService "github.com/vendrya/markethub/internal/modules/products/service"
 )
 
 func main() {
@@ -42,9 +45,14 @@ func main() {
 
 	uRepo := userRepo.NewUserRepository(db)
 	jwtSvc := authService.NewJwtService()
+	jwtMiddleware := authMiddleware.JwtAuthMiddleware(jwtSvc)
+
 	authSvc := authService.NewAuthService(uRepo, jwtSvc)
 	authCtrl := authController.NewAuthController(authSvc)
-	jwtMiddleware := authMiddleware.JwtAuthMiddleware(jwtSvc)
+
+	productRepo := productRepository.NewProductRepository(db)
+	productSvc := productService.NewProductService(productRepo)
+	productCtrl := productController.NewProductsController(productSvc)
 
 	srv := server.NewServer()
 
@@ -55,6 +63,8 @@ func main() {
 			authGroup.POST("/register", authCtrl.Register)
 			authGroup.POST("/login", authCtrl.Login)
 		}
+
+		api.GET("/products", productCtrl.GetAllProducts)
 
 		protected := api.Group("/")
 		protected.Use(jwtMiddleware)
