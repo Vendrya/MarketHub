@@ -22,10 +22,10 @@ type Product struct {
 	Price       float64   `gorm:"not null"`
 	Status      Status    `gorm:"type:varchar(20);default:'ACTIVE'"`
 
-	CategoryID uuid.UUID `gorm:"type:uuid;not null"`
+	CategoryID uuid.UUID `json:"-" gorm:"type:uuid;not null"`
 	Category   *Category
 
-	UserID uuid.UUID `gorm:"type:uuid;not null"`
+	UserID uuid.UUID `json:"-" gorm:"type:uuid;not null"`
 
 	Tags []Tag `gorm:"many2many:product_tags"`
 

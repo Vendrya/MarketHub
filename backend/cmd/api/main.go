@@ -51,7 +51,9 @@ func main() {
 	authCtrl := authController.NewAuthController(authSvc)
 
 	productRepo := productRepository.NewProductRepository(db)
-	productSvc := productService.NewProductService(productRepo)
+	categoryRepo := productRepository.NewCategoryRepository(db)
+	tagRepo := productRepository.NewTagRepository(db)
+	productSvc := productService.NewProductService(productRepo, tagRepo, categoryRepo)
 	productCtrl := productController.NewProductsController(productSvc)
 
 	srv := server.NewServer()
@@ -65,6 +67,7 @@ func main() {
 		}
 
 		api.GET("/products", productCtrl.GetAllProducts)
+		api.POST("/products", jwtMiddleware, productCtrl.CreateProduct)
 
 		protected := api.Group("/")
 		protected.Use(jwtMiddleware)
