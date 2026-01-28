@@ -5,6 +5,8 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+
+	"github.com/vendrya/markethub/internal/modules/user/models"
 )
 
 type Status string
@@ -23,13 +25,14 @@ type Product struct {
 	Status      Status    `gorm:"type:varchar(20);default:'ACTIVE'"`
 
 	CategoryID uuid.UUID `json:"-" gorm:"type:uuid;not null"`
-	Category   *Category
+	Category   *Category `json:"category,omitempty"`
 
 	UserID uuid.UUID `json:"-" gorm:"type:uuid;not null"`
 
-	Tags []Tag `gorm:"many2many:product_tags"`
+	Tags []Tag       `gorm:"many2many:product_tags"`
+	User models.User `json:"author,omitempty" gorm:"foreignKey:UserID"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }

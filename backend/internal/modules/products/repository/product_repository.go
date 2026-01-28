@@ -15,11 +15,8 @@ func NewProductRepository(db *gorm.DB) *ProductRepository {
 
 func (r *ProductRepository) FindAllProducts() ([]models.Product, error) {
 	var products []models.Product
-	if err := r.db.Model(&models.Product{}).Preload("Tags").Preload("Category").Find(&products).Error; err != nil {
-		return nil, err
-	}
-
-	return products, nil
+	err := r.db.Preload("Category").Preload("Tags").Preload("User").Find(&products).Error
+	return products, err
 }
 
 func (r *ProductRepository) CreateProduct(product *models.Product) error {

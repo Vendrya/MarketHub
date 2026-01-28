@@ -9,10 +9,10 @@ type Category struct {
 	ID   uuid.UUID `gorm:"type:uuid;default:gen_random_uuid();primaryKey"`
 	Name string    `gorm:"not null"`
 
-	Products []Product `gorm:"foreignKey:CategoryID"`
+	Products []Product `gorm:"foreignKey:CategoryID" json:"-"`
 
-	ParentID *uuid.UUID `gorm:"type:uuid"`
-	Parent   *Category  `gorm:"foreignKey:ParentID"`
+	ParentID *uuid.UUID `gorm:"type:uuid" json:"parentId,omitempty"`
+	Parent   *Category  `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
 }
 
 func SeedCategories(db *gorm.DB) error {

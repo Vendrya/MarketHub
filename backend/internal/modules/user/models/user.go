@@ -5,8 +5,6 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-
-	products "github.com/vendrya/markethub/internal/modules/products/models"
 )
 
 type Role string
@@ -23,15 +21,15 @@ type User struct {
 	LastName  string `gorm:"not null"`
 
 	Email    string `gorm:"uniqueIndex;not null"`
-	Password string `gorm:"not null"`
+	Password string `gorm:"not null" json:"-"`
 
-	Products []products.Product `gorm:"foreignKey:UserID"`
+	// Products []products.Product `gorm:"foreignKey:UserID"`
 
 	Role Role `gorm:"type:varchar(20);default:'USER'"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 func (u *User) GetFullName() string {
