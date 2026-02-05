@@ -20,15 +20,16 @@ type User struct {
 	FirstName string `gorm:"not null"`
 	LastName  string `gorm:"not null"`
 
-	Email string `gorm:"uniqueIndex;not null"`
+	Email    string `gorm:"uniqueIndex;not null"`
+	Password string `gorm:"not null" json:"-"`
 
-	Password string `gorm:"not null"`
+	// Products []products.Product `gorm:"foreignKey:UserID"`
 
 	Role Role `gorm:"type:varchar(20);default:'USER'"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 func (u *User) GetFullName() string {

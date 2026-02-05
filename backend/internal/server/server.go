@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/vendrya/markethub/internal/helpers"
 )
 
 type Server struct {
@@ -15,10 +16,7 @@ func NewServer() *Server {
 	r.Use(corsMiddleware())
 
 	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status":  "ok",
-			"message": "MarketHub API is running",
-		})
+		helpers.CreateResponse(c, 200, "MarketHub API is running", nil, nil)
 	})
 
 	return &Server{Engine: r}
